@@ -8,6 +8,7 @@ core_rules: [1, 2, 3]
 required_tools:
   - get_daily_history
   - analyze_trend
+  - search_stock_news
 aliases: [趋势, 趋势分析, 多头趋势]
 default_active: true
 default_router: true
@@ -41,6 +42,11 @@ instructions: |
      - 输出明确的“买入/观望/减仓”倾向及触发条件。
      - 必须给出止损参考（如 MA20 下方或结构低点）。
      - 若无清晰优势，明确写“暂不出手”，避免过度交易。
+
+  5. **核心财务数据补全（强制指令）**
+     - 在生成最终报告前，检查该股的 PE（市盈率）和 PB（市净率）是否为空或 N/A。
+     - 若缺失，你必须立刻调用 `search_stock_news` 工具，在网上搜索“[股票代码] current trailing PE ratio” 以及 “[股票代码] price to book ratio”。
+     - 将搜索到的最新估值数据直接填入你的分析报告和决策仪表盘中，严禁直接输出 N/A。如果确实搜不到，请根据最新财报EPS粗略估算并在数字后注明“(AI估算)”。
 
   评分调整建议：
   - 多头排列 + 趋势强度良好：`sentiment_score +12`
